@@ -34,7 +34,7 @@ Exam.merge_sentences = function (Sentence1, Sentence2) {
     const ArrSentence1 = Sentence1.split(" ");
     const ArrSentence2 = Sentence2.split(" ");
     if (ArrSentence1.length !== ArrSentence2.length){
-        return ["Value error"];
+        return Error; // didn't see anything like value-error in JS
     }
     let MergedWords = [];
     let Index;
@@ -46,7 +46,7 @@ Exam.merge_sentences = function (Sentence1, Sentence2) {
         }
     }
 
-    return MergedWords; // .reduce((SentenceOut, CurrentWord) => SentenceOut.concat(" "+CurrentWord), []);
+    return MergedWords;
 };
 
 // Write a function that returns the number of lowercase letters in
@@ -55,14 +55,17 @@ Exam.merge_sentences = function (Sentence1, Sentence2) {
 //          the input "sPonGe bOb"
 //          returns 6
 Exam.lowercase_count = function (Str) {
-    const LowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
-    let Index;
-    let LowerCaseCount = 0;
-    for (Index = 0; Index < Str.length; Index += 1){
-        if (LowercaseLetters.search(Str[Index]) !== -1){
-            LowerCaseCount += 1;
-        }
-    }
+    Str = Str.split("");  // THIS CONVERTS Str TO ARRAY
+
+    const LowerCaseCount = Str.reduce(
+        function(LowerCaseAccumulated, Currentletter){
+            const LowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
+            if (LowercaseLetters.search(Currentletter) !== -1){
+                LowerCaseAccumulated += 1;
+            }
+            return LowerCaseAccumulated;
+        }, 0);
+
     return LowerCaseCount;
 };
 
@@ -71,8 +74,15 @@ Exam.lowercase_count = function (Str) {
 
 // Write a function that returns the longest a key in the input object
 // whose keys are all strings.
-Exam.longest_key = function () {
-    return;
+Exam.longest_key = function (ObjInput) {
+    const Keys = Object.keys(ObjInput); // 这是什么鬼畜语法？？？
+    const LongestKey = Keys.reduce(function(LongKey, CurrentKey){
+        if (CurrentKey.length > LongKey.length){
+            LongKey = CurrentKey;
+        }
+        return LongKey;
+    });
+    return LongestKey;
 };
 
 // Write a function that returns the largest value that is an even value in the
