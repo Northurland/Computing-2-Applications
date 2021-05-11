@@ -33,20 +33,27 @@ Exam.merge_sentences = function (Sentence1, Sentence2) {
     //Shall consider parameters as constants.
     const ArrSentence1 = Sentence1.split(" ");
     const ArrSentence2 = Sentence2.split(" ");
-    if (ArrSentence1.length !== ArrSentence2.length){
+
+    if (ArrSentence1.length !== ArrSentence2.length) {
         return Error; // didn't see anything like value-error in JS
     }
-    let MergedWords = [];
-    let Index;
-    for (Index = 0; Index < ArrSentence1.length + ArrSentence2.length; Index += 1){
-        if (Index % 2 === 0){
-            MergedWords.push(Sentence1[Index/2]);
-        }else{
-            MergedWords.push(Sentence2[(Index-1)/2]);
-        }
-    }
 
-    return MergedWords;
+    const ArrWords = ArrSentence1.concat(ArrSentence2);
+
+    const ArrMergedWords = ArrWords.reduce(
+        function (ArrOut, CurrentWord, CurrentIndex, ArrReference) {
+            if (CurrentIndex < ArrReference.length / 2) {
+                ArrOut[CurrentIndex * 2] = CurrentWord;
+            } else if (CurrentIndex >= ArrReference.length / 2) {
+                ArrOut[(CurrentIndex - ArrReference.length/2)*2+1] = CurrentWord;
+            }
+            return ArrOut;
+    }, new Array(ArrWords.length));
+
+    const SentenceOut = ArrMergedWords.reduce(
+        (Sentence, CurrentWord) => Sentence.concat(" "+CurrentWord));
+
+    return SentenceOut;
 };
 
 // Write a function that returns the number of lowercase letters in
@@ -116,8 +123,10 @@ Exam.value_greatest_even = function (ObjInput) {
 //
 // The username argument should not be set to a default,
 // but the location argument should default to "London".
-Exam.greeting = function () {
-    return;
+Exam.greeting = function (Username, Location="London") {
+    const greeting = "Hello, "+Username.toString() +
+    ", how is "+Location.toString()+"?";
+    return greeting;
 };
 
 
@@ -128,8 +137,12 @@ Exam.greeting = function () {
 //     offset with a default of 0
 // The function returns the calculation x * scalar + offset for the input x
 // if the output value of the calculation is positive, otherwise it returns 0.
-Exam.floor_line = function () {
-    return;
+Exam.floor_line = function (x, scalar=1, offset=0) {
+    const Result = x * scalar + offset;
+    if (Result > 0){
+        return Result;
+    }
+    return 0;
 };
 
 export default Object.freeze(Exam);
