@@ -14,8 +14,8 @@ const Exam = Object.create(null);
 //    for example:
 //      an input list of [1,2,3,4,5,6,7,8]
 //      returns [1,4,7]
-Exam.every_third = function (array) {
-    return array.filter((ignore, k) => k % 3 === 0);
+Exam.every_third = function (Arr){
+    return Arr.filter((ArrItem, Index) => Index % 3 === 0);
 };
 
 
@@ -29,8 +29,24 @@ Exam.every_third = function (array) {
 //       the input sentences "the cow jumped over the moon" and
 //                            "jack and jill went up the"
 //       returns "the jack cow and jumped jill over went the up moon the"
-Exam.merge_sentences = function () {
-    return;
+Exam.merge_sentences = function (Sentence1, Sentence2) {
+    //Shall consider parameters as constants.
+    const ArrSentence1 = Sentence1.split(" ");
+    const ArrSentence2 = Sentence2.split(" ");
+    if (ArrSentence1.length !== ArrSentence2.length){
+        return ["Value error"];
+    }
+    let MergedWords = [];
+    let Index;
+    for (Index = 0; Index < ArrSentence1.length + ArrSentence2.length; Index += 1){
+        if (Index % 2 === 0){
+            MergedWords.push(Sentence1[Index/2]);
+        }else{
+            MergedWords.push(Sentence2[(Index-1)/2]);
+        }
+    }
+
+    return MergedWords; // .reduce((SentenceOut, CurrentWord) => SentenceOut.concat(" "+CurrentWord), []);
 };
 
 // Write a function that returns the number of lowercase letters in
@@ -38,8 +54,16 @@ Exam.merge_sentences = function () {
 //     for example:
 //          the input "sPonGe bOb"
 //          returns 6
-Exam.lowercase_count = function () {
-    return;
+Exam.lowercase_count = function (Str) {
+    const LowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
+    let Index;
+    let LowerCaseCount = 0;
+    for (Index = 0; Index < Str.length; Index += 1){
+        if (LowercaseLetters.search(Str[Index]) !== -1){
+            LowerCaseCount += 1;
+        }
+    }
+    return LowerCaseCount;
 };
 
 
