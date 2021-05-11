@@ -87,8 +87,25 @@ Exam.longest_key = function (ObjInput) {
 
 // Write a function that returns the largest value that is an even value in the
 // input dictionary whose values are all whole numbers.
-Exam.value_greatest_even = function () {
-    return;
+Exam.value_greatest_even = function (ObjInput) {
+    const Values = Object.values(ObjInput);
+
+    let GreatestValue = Values.reduce(function(GreaterValue, CurrentValue){
+        if (GreaterValue%2 !== 0){
+            GreaterValue = CurrentValue;
+        }
+
+        if (CurrentValue > GreaterValue && CurrentValue%2 === 0){
+            GreaterValue = CurrentValue;
+        }
+        return GreaterValue;
+    });
+
+    if (GreatestValue%2 !== 0){ // 哼，哼，啊啊啊啊啊啊
+        GreatestValue = 0;
+    }
+
+    return GreatestValue;
 };
 
 
